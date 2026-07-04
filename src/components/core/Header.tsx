@@ -193,11 +193,9 @@ export const Header: React.FC<HeaderProps> = ({
             }}
             className="flex items-center space-x-2 pl-1 pr-2 py-1 rounded-xl bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200/35 dark:border-slate-800/35 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200"
           >
-            <img
-              src={currentUser.avatar}
-              alt={currentUser.name}
-              className="h-7 w-7 rounded-lg object-cover ring-1 ring-slate-200 dark:ring-slate-800"
-            />
+            <div className="h-7 w-7 rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 ring-1 ring-slate-200 dark:ring-slate-800">
+              <User className="h-4 w-4" />
+            </div>
             <div className="hidden lg:flex flex-col items-start text-left">
               <span className="text-[11px] font-semibold leading-tight text-slate-900 dark:text-white">
                 {currentUser.name}

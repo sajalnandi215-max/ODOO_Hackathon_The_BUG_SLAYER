@@ -9,7 +9,8 @@ import {
   Gift, 
   Briefcase,
   ChevronRight,
-  IndianRupee
+  IndianRupee,
+  User
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -150,11 +151,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
             <div className="p-5 rounded-2xl border border-slate-200/40 dark:border-slate-800/40 glass-card space-y-4">
               <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Profile Overview</h3>
               <div className="flex items-center space-x-3.5 pb-4 border-b border-slate-200/40 dark:border-slate-800/40">
-                <img
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150"
-                  alt="Employee"
-                  className="h-12 w-12 rounded-xl object-cover border border-slate-200 dark:border-slate-800"
-                />
+                <div className="h-12 w-12 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 shadow-sm flex-shrink-0">
+                  <User className="h-6 w-6" />
+                </div>
                 <div>
                   <h4 className="font-outfit font-bold text-slate-900 dark:text-white text-sm">Employee</h4>
                   <p className="text-xs text-slate-500">Staff Member</p>
