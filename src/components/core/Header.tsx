@@ -8,7 +8,8 @@ import {
   User, 
   Command,
   HelpCircle,
-  LogOut
+  LogOut,
+  Menu
 } from 'lucide-react';
 import { mockNotifications } from '../../data/mockData';
 
@@ -18,43 +19,45 @@ interface HeaderProps {
   role: string;
   setRole: (role: string) => void;
   onLogout: () => void;
+  onToggleMobileSidebar: () => void;
 }
 
 // Maps role to active user detail for the mockup
 export const roleUserMap: Record<string, { name: string; designation: string; avatar: string }> = {
   'Super Admin': {
     name: 'Administrator',
-    designation: 'System Control',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+    designation: 'Super Admin',
+    avatar: ''
   },
   'HR Manager': {
     name: 'HR Manager',
-    designation: 'Human Resources',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+    designation: 'HR Department',
+    avatar: ''
   },
   'Department Manager': {
     name: 'Dept Manager',
     designation: 'Operations Management',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+    avatar: ''
   },
   'Team Lead': {
     name: 'Team Lead',
     designation: 'Technical Operations',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+    avatar: ''
   },
   'Employee': {
     name: 'Employee',
     designation: 'Staff Member',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+    avatar: ''
   }
 };
 
-export const Header: React.FC<HeaderProps> = ({
-  darkMode,
-  setDarkMode,
+export const Header: React.FC<HeaderProps> = ({ 
+  darkMode, 
+  setDarkMode, 
   role,
   setRole,
-  onLogout
+  onLogout,
+  onToggleMobileSidebar
 }) => {
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
@@ -64,9 +67,16 @@ export const Header: React.FC<HeaderProps> = ({
   const unreadCount = mockNotifications.filter(n => !n.read).length;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 h-16 border-b border-slate-200/50 dark:border-slate-800/50 glass-panel flex items-center justify-between px-6">
+    <header className="fixed top-0 left-0 right-0 z-40 h-16 border-b border-slate-200/50 dark:border-slate-800/50 glass-panel flex items-center justify-between px-4 md:px-6">
       {/* Brand Logo */}
       <div className="flex items-center space-x-2">
+        <button
+          onClick={onToggleMobileSidebar}
+          className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-500 block md:hidden mr-1"
+          title="Toggle Navigation"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
         <div className="flex items-center justify-center h-9 w-9 rounded-xl bg-white overflow-hidden p-0.5 border border-slate-200/55 dark:border-slate-800/40 shadow-sm flex-shrink-0">
           <img src="/logo.png" alt="Helix Logo" className="h-full w-full object-contain rounded-lg" />
         </div>

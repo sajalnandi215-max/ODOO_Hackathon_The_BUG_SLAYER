@@ -23,6 +23,7 @@ interface SidebarProps {
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
   onLogout: () => void;
+  isMobileOpen?: boolean;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ 
@@ -31,7 +32,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   role, 
   isCollapsed, 
   setIsCollapsed,
-  onLogout
+  onLogout,
+  isMobileOpen = false
 }) => {
   const getUserProfile = () => {
     switch (role) {
@@ -66,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const allowedMenuItems = menuItems.filter(item => item.roles.includes(role));
 
   return (
-    <div className={`h-full border-r border-slate-200/40 dark:border-slate-800/40 bg-white dark:bg-slate-950 flex flex-col justify-between transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
+    <div className={`fixed top-0 left-0 z-30 h-screen pt-16 border-r border-slate-200/40 dark:border-slate-800/40 bg-white dark:bg-slate-950 flex flex-col justify-between transition-all duration-300 md:translate-x-0 ${isCollapsed ? 'w-16' : 'w-64'} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
       {/* Brand Logo Header */}
       <div className="p-4 border-b border-slate-200/50 dark:border-slate-850 flex items-center justify-between">
         {!isCollapsed && (
