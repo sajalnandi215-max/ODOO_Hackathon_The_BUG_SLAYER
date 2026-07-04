@@ -1,0 +1,89 @@
+framework
+Goal Description
+Develop a modern, enterprise-grade, and visually stunning frontend UI for the Human Resource Management System (HRMS). The goal is to create a complete, responsive, and interactive prototype demonstrating the capabilities of the HRMS, with realistic mock data, multiple user roles, and advanced features (such as AI insights, recruitment kanban, interactive calendars, and settings management).
+
+We will build the frontend using React + TypeScript + Tailwind CSS + Framer Motion (for animations) + Recharts/Chart.js (for analytics).
+
+User Review Required
+IMPORTANT
+
+Dynamic Role Switcher: To showcase the system's Role-Based Access Control (RBAC), we propose implementing a global role switcher in the dashboard header. This will let you toggle between Super Admin, HR Manager, Department Manager, and Employee views instantly to see the interface, dashboards, and available modules update dynamically.
+
+TIP
+
+State vs Router: For an interactive frontend mockup, using a client-side state router or simple hash router allows us to keep the entire system extremely fast, with zero reload lag, making it feel very premium and responsive.
+
+Open Questions
+IMPORTANT
+
+Tailwind CSS Version: Which version of Tailwind CSS should we configure for the project? (e.g., Tailwind CSS v3 or Tailwind CSS v4)?
+Chart Library Preference: Do you prefer Recharts (highly responsive and reactive for React) or Chart.js (standard canvas-based) for the data visualizations? We recommend Recharts for clean React integration and smooth transitions.
+Next.js vs. Vite (React SPA): The prompt mentions Next.js and Vite. Since we are building the frontend UI first, initializing a Vite + React + TypeScript app is highly recommended for faster compilation and easier static deployment of the prototype. Let us know if you prefer Next.js instead.
+Proposed Changes
+Configuration and Setup
+[NEW] 
+tailwind.config.js
+Define custom colors (deep slate, vibrant indigo, violet accents, and glassmorphic colors), borders, shadow sizes, font families (e.g., Inter/Outfit), and theme configurations for Dark/Light mode support.
+
+[NEW] 
+src/index.css
+Inject core CSS utilities, import modern fonts, define glassmorphic gradient helper classes, custom scrollbars, and active state transitions.
+
+Layout and Navigation
+[NEW] 
+src/components/Sidebar.tsx
+A collapsible sidebar showing different navigation items depending on the currently selected user role. Includes smooth animations using Framer Motion.
+
+[NEW] 
+src/components/Header.tsx
+Contains global search, command palette toggle, notifications center dropdown, theme toggle, and a role switcher to dynamically preview RBAC functionality.
+
+Dashboard Modules
+[NEW] 
+src/components/Dashboard.tsx
+Displays statistics cards (Attendance, Leaves, Attrition Risk, Payroll), dynamic charts (Hiring Trends, Salary Distribution, Attendance analytics), upcoming celebrations (birthdays, work anniversaries), pending approvals table, and the AI HR Assistant insights panel.
+
+[NEW] 
+src/components/EmployeeManagement.tsx
+A full-featured grid and list view of employees, with multi-attribute filtering, interactive modal to add employees, and a detailed profile view including personal, professional, salary, documents, and assigned assets.
+
+[NEW] 
+src/components/Recruitment.tsx
+A modern Kanban hiring board allowing candidates to be dragged through recruitment stages (Applied, Screened, Interview, Offered). Includes AI Resume Screen mockup and interview feedback form.
+
+[NEW] 
+src/components/Attendance.tsx
+Interactive clock-in/out terminal, biometric scanner simulation (mock camera UI for facial check-in), manual requests logs, geofencing coordinates display, and shift schedules planner.
+
+[NEW] 
+src/components/Leave.tsx
+Leave balances tracker, leave application form modal, department calendar view (highlighting who is on leave), and approval lists for managers.
+
+[NEW] 
+src/components/Payroll.tsx
+Detailed payroll processor: salary revisions tracker, allowance configuration, salary anomaly detector panel (AI feature), and custom payslip viewer/exporter mockup.
+
+[NEW] 
+src/components/Performance.tsx
+KPI & OKR dashboards, manager-peer feedback hub, performance reviews tracker, and self-assessment workflow UI.
+
+[NEW] 
+src/components/AdminSettings.tsx
+System controls: RBAC grid (role permissions configuration matrix), backup/restore actions, activity monitoring, and notification rules configuration.
+
+[NEW] 
+src/components/AIChatbot.tsx
+An interactive floating chat interface featuring pre-configured AI prompts (e.g., "Screen resumes for Senior Engineer", "Generate leave trends report", "Calculate payroll variance").
+
+Verification Plan
+Automated Tests
+Build test to verify zero compilation errors in TypeScript:
+bash
+
+npm run build
+Manual Verification
+Visual inspection of Light/Dark modes, transitions, responsive behaviors, and glassmorphic elements.
+Verification of dynamic sidebar navigation updates when changing user roles in the switcher.
+Testing of drag-and-drop actions in the Recruitment Kanban Board.
+Interacting with clock-in actions and observing immediate logs update in the Attendance screen.
+Form submissions validation (Leave application, onboarding checklist items).
