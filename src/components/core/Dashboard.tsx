@@ -9,7 +9,7 @@ import {
   Gift, 
   Briefcase,
   ChevronRight,
-  DollarSign
+  IndianRupee
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -95,7 +95,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
       { title: "Total Headcount", value: totalEmployees, icon: Users, change: "No new hires this month", color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
       { title: "Today's Attendance", value: `${attendanceRate}%`, icon: Clock, change: `${employees.length}/${employees.length} present`, color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
       { title: "Employees on Leave", value: activeLeaves, icon: Calendar, change: `${pendingLeaves} requests pending`, color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/20" },
-      { title: "Payroll Invoiced (Q3)", value: "$0.00", icon: DollarSign, change: "No payroll processed", color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/20" },
+      { title: "Payroll Invoiced (Q3)", value: "Rs. 0.00", icon: IndianRupee, change: "No payroll processed", color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/20" },
     ];
   };
 
