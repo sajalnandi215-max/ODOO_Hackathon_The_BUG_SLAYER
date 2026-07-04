@@ -37,15 +37,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const getUserProfile = () => {
     switch (role) {
       case 'Employee':
-        return { name: 'Vikram Mehta', title: 'Senior Frontend Eng.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' };
+        return { name: 'Employee', title: 'Staff Member', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
       case 'HR Manager':
-        return { name: 'Emily Watson', title: 'HR Operations Lead', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150' };
+        return { name: 'HR Manager', title: 'Human Resources', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
       case 'Department Manager':
-        return { name: 'Marcus Vance', title: 'VP Engineering', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' };
+        return { name: 'Dept Manager', title: 'Operations Management', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
       case 'Team Lead':
-        return { name: 'Sarah Jenkins', title: 'Principal Engineer', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' };
+        return { name: 'Team Lead', title: 'Technical Operations', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
       default:
-        return { name: 'Helix Admin', title: 'Chief Administrator', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
+        return { name: 'Helix Admin', title: 'System Control', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150' };
     }
   };
   const userProfile = getUserProfile();

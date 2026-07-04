@@ -43,33 +43,40 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
   }, []);
 
   // Compute analytics numbers based on database
-  const totalEmployees = employees.length + 139; // Add buffer to make it look like a large enterprise
+  const totalEmployees = employees.length;
   const activeLeaves = employees.filter(e => e.status === 'On-Leave').length;
   const pendingLeaves = leaveRequests.filter(r => r.status === 'Pending').length;
-  const attendanceRate = 94.6;
+  const attendanceRate = employees.length > 0 ? 100 : 0;
 
   // Chart data 1: Attendance Trends
   const attendanceData = [
-    { name: 'Mon', Present: 94, Target: 95 },
-    { name: 'Tue', Present: 95, Target: 95 },
-    { name: 'Wed', Present: 93, Target: 95 },
-    { name: 'Thu', Present: 96, Target: 95 },
-    { name: 'Fri', Present: 95, Target: 95 },
+    { name: 'Mon', Present: 0, Target: 95 },
+    { name: 'Tue', Present: 0, Target: 95 },
+    { name: 'Wed', Present: 0, Target: 95 },
+    { name: 'Thu', Present: 0, Target: 95 },
+    { name: 'Fri', Present: 0, Target: 95 },
   ];
 
   // Chart data 2: Department Headcount Distribution
-  const departmentData = [
-    { name: 'Engineering', value: 58 },
-    { name: 'Sales', value: 34 },
-    { name: 'Product', value: 15 },
-    { name: 'Marketing', value: 12 },
-    { name: 'HR', value: 8 },
-    { name: 'Finance', value: 6 },
-  ];
+  const getDeptHeadcount = () => {
+    const counts: Record<string, number> = {
+      'Engineering': 0,
+      'Sales': 0,
+      'Product': 0,
+      'Marketing': 0,
+      'HR': 0,
+      'Finance': 0
+    };
+    employees.forEach(e => {
+      if (counts[e.department] !== undefined) {
+        counts[e.department]++;
+      }
+    });
+    return Object.keys(counts).map(name => ({ name, value: counts[name] }));
+  };
+  const departmentData = getDeptHeadcount();
 
   const COLORS = ['#6366f1', '#a855f7', '#ec4899', '#f43f5e', '#10b981', '#f59e0b'];
-
-
 
   // System statistics display config based on current role
   const getOverviewStats = () => {
@@ -77,18 +84,18 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
 
     if (isEmployee) {
       return [
-        { title: "My Attendance Rate", value: "98.2%", icon: Clock, change: "On time 19/20 days", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
-        { title: "Leave Balance (Earned)", value: "11 Days", icon: Calendar, change: "Casual: 7 | Sick: 5", color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
-        { title: "Assigned Assets", value: "2 Devices", icon: Briefcase, change: "MacBook Pro, Monitor", color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/20" },
-        { title: "Current KPI Progress", value: "85%", icon: Sparkles, change: "2 key results on track", color: "text-violet-500", bg: "bg-violet-50 dark:bg-violet-950/20" },
+        { title: "My Attendance Rate", value: "0%", icon: Clock, change: "No logs recorded", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
+        { title: "Leave Balance (Earned)", value: "0 Days", icon: Calendar, change: "Casual: 0 | Sick: 0", color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
+        { title: "Assigned Assets", value: "0 Devices", icon: Briefcase, change: "No hardware assigned", color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/20" },
+        { title: "Current KPI Progress", value: "0%", icon: Sparkles, change: "No OKRs set", color: "text-violet-500", bg: "bg-violet-50 dark:bg-violet-950/20" },
       ];
     }
 
     return [
-      { title: "Total Headcount", value: totalEmployees, icon: Users, change: "+4 this month", color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
-      { title: "Today's Attendance", value: `${attendanceRate}%`, icon: Clock, change: "135/142 present", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
+      { title: "Total Headcount", value: totalEmployees, icon: Users, change: "No new hires this month", color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
+      { title: "Today's Attendance", value: `${attendanceRate}%`, icon: Clock, change: `${employees.length}/${employees.length} present`, color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
       { title: "Employees on Leave", value: activeLeaves, icon: Calendar, change: `${pendingLeaves} requests pending`, color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/20" },
-      { title: "Payroll Invoiced (Q3)", value: "$124.5k", icon: DollarSign, change: "Disbursed on 30th Jun", color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/20" },
+      { title: "Payroll Invoiced (Q3)", value: "$0.00", icon: DollarSign, change: "No payroll processed", color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/20" },
     ];
   };
 
@@ -100,12 +107,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-violet-600/10 via-indigo-600/5 to-transparent border border-indigo-100/30 dark:border-indigo-950/20">
         <div>
           <h1 className="font-outfit text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Welcome Back, {role === 'Employee' ? 'Vikram' : role === 'HR Manager' ? 'Emily' : 'Admin'}! 👋
+            Welcome Back, {role}! 👋
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             {role === 'Employee' 
               ? 'Here is an overview of your work statistics, tasks, and calendar events for today.'
-              : 'You have administrative control enabled. 3 leave approvals and 1 system notification require review.'
+              : `You have administrative control enabled. ${pendingLeaves} leave approvals require review.`
             }
           </p>
         </div>
@@ -144,43 +151,28 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
               <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Profile Overview</h3>
               <div className="flex items-center space-x-3.5 pb-4 border-b border-slate-200/40 dark:border-slate-800/40">
                 <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150"
-                  alt="Vikram Mehta"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150"
+                  alt="Employee"
                   className="h-12 w-12 rounded-xl object-cover border border-slate-200 dark:border-slate-800"
                 />
                 <div>
-                  <h4 className="font-outfit font-bold text-slate-900 dark:text-white text-sm">Vikram Mehta</h4>
-                  <p className="text-xs text-slate-500">Senior Frontend Engineer</p>
-                  <span className="text-[10px] font-mono font-semibold text-indigo-600 dark:text-indigo-400">EMP-2026-004</span>
+                  <h4 className="font-outfit font-bold text-slate-900 dark:text-white text-sm">Employee</h4>
+                  <p className="text-xs text-slate-500">Staff Member</p>
+                  <span className="text-[10px] font-mono font-semibold text-indigo-600 dark:text-indigo-400">EMP-NEW</span>
                 </div>
               </div>
               <div className="space-y-2.5 text-xs text-slate-700 dark:text-slate-350">
-                <div className="flex justify-between"><span className="text-slate-400 font-medium">Department:</span><span>Engineering</span></div>
-                <div className="flex justify-between"><span className="text-slate-400 font-medium">Reporting Manager:</span><span>Sarah Jenkins (Principal)</span></div>
-                <div className="flex justify-between"><span className="text-slate-400 font-medium">Work Email:</span><span>vikram.m@helixhrms.com</span></div>
-                <div className="flex justify-between"><span className="text-slate-400 font-medium">Joining Date:</span><span>2023-09-01</span></div>
+                <div className="flex justify-between"><span className="text-slate-400 font-medium">Department:</span><span>Operations</span></div>
+                <div className="flex justify-between"><span className="text-slate-400 font-medium">Reporting Manager:</span><span>None</span></div>
+                <div className="flex justify-between"><span className="text-slate-400 font-medium">Work Email:</span><span>employee@company.com</span></div>
+                <div className="flex justify-between"><span className="text-slate-400 font-medium">Joining Date:</span><span>Today</span></div>
               </div>
             </div>
 
-            {/* My Assets assigned */}
+            {/* My Assigned Assets */}
             <div className="p-5 rounded-2xl border border-slate-200/40 dark:border-slate-800/40 glass-card space-y-3">
               <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Assigned Assets</h3>
-              <div className="space-y-2.5">
-                <div className="p-3 rounded-xl bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/20 text-xs">
-                  <div className="flex justify-between items-center">
-                    <span className="font-bold text-slate-850 dark:text-white">MacBook Pro 14" M3 Pro</span>
-                    <span className="text-[9px] text-slate-400 font-bold">AST-8239</span>
-                  </div>
-                  <span className="text-[10px] text-slate-500 block mt-1 font-mono">Serial: C02FLK832L</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/20 text-xs">
-                  <div className="flex justify-between items-center">
-                    <span className="font-bold text-slate-850 dark:text-white">Apple Studio Display 27"</span>
-                    <span className="text-[9px] text-slate-400 font-bold">AST-1044</span>
-                  </div>
-                  <span className="text-[10px] text-slate-500 block mt-1 font-mono">Serial: KYBD928392</span>
-                </div>
-              </div>
+              <p className="text-xs text-slate-400 text-center py-6">No hardware assets assigned yet.</p>
             </div>
           </div>
 
@@ -192,27 +184,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
                 <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Recent Attendance</h3>
                 <button 
                   onClick={() => setCurrentTab('attendance')}
-                  className="text-[10px] font-bold text-indigo-650 dark:text-indigo-400 hover:underline"
+                  className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                   Manage Attendance
                 </button>
               </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-xs">
-                  <div>
-                    <span className="font-bold text-slate-900 dark:text-white block">July 03, 2026</span>
-                    <span className="text-[10px] text-slate-450 font-mono">09:45 AM - 06:15 PM</span>
-                  </div>
-                  <span className="px-1.5 py-0.5 text-[9px] font-bold bg-amber-50 dark:bg-amber-955/20 text-amber-600 border border-amber-200/20 rounded">Late</span>
-                </div>
-                <div className="flex justify-between items-center text-xs">
-                  <div>
-                    <span className="font-bold text-slate-900 dark:text-white block">July 02, 2026</span>
-                    <span className="text-[10px] text-slate-450 font-mono">08:58 AM - 06:05 PM</span>
-                  </div>
-                  <span className="px-1.5 py-0.5 text-[9px] font-bold bg-emerald-50 dark:bg-emerald-955/20 text-emerald-600 border border-emerald-200/20 rounded">Present</span>
-                </div>
-              </div>
+              <p className="text-xs text-slate-400 text-center py-6">No recent attendance records found.</p>
             </div>
 
             {/* Leave Tracker summary */}
@@ -221,21 +198,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
                 <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Time Off Requests</h3>
                 <button 
                   onClick={() => setCurrentTab('leave')}
-                  className="text-[10px] font-bold text-indigo-650 dark:text-indigo-400 hover:underline"
+                  className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                   Apply Leave
                 </button>
               </div>
-              <div className="p-3 rounded-xl bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/20 text-xs">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="font-bold block text-slate-850 dark:text-white">Casual Leave Request</span>
-                    <span className="text-[9px] text-slate-400 block mt-0.5">July 10 - July 12 • 3 Days</span>
-                  </div>
-                  <span className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-amber-50 dark:bg-amber-955/20 text-amber-600 border border-amber-200/20">Pending</span>
-                </div>
-                <p className="text-[10px] text-slate-500 italic mt-2">"Family gathering in hometown"</p>
-              </div>
+              <p className="text-xs text-slate-400 text-center py-6">No time off requests filed.</p>
             </div>
           </div>
 
@@ -247,53 +215,27 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
                 <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">My Payslips</h3>
                 <button 
                   onClick={() => setCurrentTab('payroll')}
-                  className="text-[10px] font-bold text-indigo-650 dark:text-indigo-400 hover:underline"
+                  className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                   Payslip Vault
                 </button>
               </div>
-              <div className="space-y-3.5">
-                <div className="flex justify-between items-center text-xs">
-                  <div>
-                    <span className="font-bold text-slate-850 dark:text-white block">June 2026 pay cycle</span>
-                    <span className="text-[9px] text-slate-450 font-mono">Net pay: $6,900.00</span>
-                  </div>
-                  <button 
-                    onClick={() => alert("Downloading June 2026 Payslip dockets...")}
-                    className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
-                  >
-                    Download PDF
-                  </button>
-                </div>
-                <div className="flex justify-between items-center text-xs">
-                  <div>
-                    <span className="font-bold text-slate-850 dark:text-white block">May 2026 pay cycle</span>
-                    <span className="text-[9px] text-slate-450 font-mono">Net pay: $6,900.00</span>
-                  </div>
-                  <button 
-                    onClick={() => alert("Downloading May 2026 Payslip dockets...")}
-                    className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
-                  >
-                    Download PDF
-                  </button>
-                </div>
-              </div>
+              <p className="text-xs text-slate-400 text-center py-6">No payslips available yet.</p>
             </div>
 
             {/* General Corporate Announcements */}
             <div className="p-5 rounded-2xl border border-slate-200/40 dark:border-slate-800/40 glass-card space-y-4">
               <h3 className="font-outfit text-xs font-bold text-slate-400 uppercase tracking-wider">Announcements</h3>
               <div className="space-y-4">
-                <div className="space-y-1">
-                  <span className="font-bold text-xs text-slate-850 dark:text-white block leading-tight">Q3 Strategy Update Townhall</span>
-                  <span className="text-[9px] text-slate-400 block font-mono">July 03 • HR Dept</span>
-                  <p className="text-[10px] text-slate-500 leading-relaxed mt-0.5">Please check calendars for townhall invitation link starting Friday at 10 AM.</p>
-                </div>
-                <div className="space-y-1">
-                  <span className="font-bold text-xs text-slate-850 dark:text-white block leading-tight">Office hotdesking booking portal</span>
-                  <span className="text-[9px] text-slate-400 block font-mono">July 02 • HR Dept</span>
-                  <p className="text-[10px] text-slate-500 leading-relaxed mt-0.5">Reservations are required for seating reservations inside HQ Block B.</p>
-                </div>
+                {mockAnnouncements.length > 0 ? mockAnnouncements.map(ann => (
+                  <div key={ann.id} className="space-y-1">
+                    <span className="font-bold text-xs text-slate-850 dark:text-white block leading-tight">{ann.title}</span>
+                    <span className="text-[9px] text-slate-400 block font-mono">{ann.date} • {ann.author}</span>
+                    <p className="text-[10px] text-slate-500 leading-relaxed mt-0.5">{ann.content}</p>
+                  </div>
+                )) : (
+                  <p className="text-xs text-slate-400 text-center py-6">No announcements posted yet.</p>
+                )}
               </div>
             </div>
           </div>
@@ -507,13 +449,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ role, setCurrentTab }) => 
               </div>
 
               {/* Celebration Card */}
-              <div className="mt-4 p-3 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/10 flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400">
-                  <Gift className="h-4.5 w-4.5 animate-bounce" />
+              <div className="mt-4 p-3 rounded-xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/10 flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                  <Calendar className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold block text-slate-900 dark:text-white">Upcoming Birthday</span>
-                  <p className="text-[10px] text-slate-500 leading-normal mt-0.5">Sarah Jenkins turns 36 next week. Mark your calendars!</p>
+                  <span className="text-[11px] font-bold block text-slate-900 dark:text-white">Events Calendar</span>
+                  <p className="text-[10px] text-slate-500 leading-normal mt-0.5">No upcoming celebrations or events scheduled for this week.</p>
                 </div>
               </div>
             </div>

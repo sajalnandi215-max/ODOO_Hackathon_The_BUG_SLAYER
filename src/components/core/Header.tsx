@@ -23,29 +23,29 @@ interface HeaderProps {
 // Maps role to active user detail for the mockup
 export const roleUserMap: Record<string, { name: string; designation: string; avatar: string }> = {
   'Super Admin': {
-    name: 'Julia Roberts',
-    designation: 'Chief Executive Officer',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150'
+    name: 'Administrator',
+    designation: 'System Control',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
   },
   'HR Manager': {
-    name: 'Emily Watson',
-    designation: 'HR Operations Lead',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+    name: 'HR Manager',
+    designation: 'Human Resources',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
   },
   'Department Manager': {
-    name: 'Marcus Vance',
-    designation: 'VP of Engineering',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150'
+    name: 'Dept Manager',
+    designation: 'Operations Management',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
   },
   'Team Lead': {
-    name: 'Sarah Jenkins',
-    designation: 'Principal Engineer',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'
+    name: 'Team Lead',
+    designation: 'Technical Operations',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
   },
   'Employee': {
-    name: 'Vikram Mehta',
-    designation: 'Senior Frontend Engineer',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150'
+    name: 'Employee',
+    designation: 'Staff Member',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
   }
 };
 

@@ -127,11 +127,11 @@ export const Authentication: React.FC<AuthenticationProps> = ({ onLoginSuccess }
                   onChange={(e) => setLoginRole(e.target.value)}
                   className="w-full bg-transparent border-0 focus:ring-0 text-white font-medium cursor-pointer"
                 >
-                  <option value="Super Admin" className="bg-slate-950">Super Admin (Julia Roberts)</option>
-                  <option value="HR Manager" className="bg-slate-950">HR Manager (Emily Watson)</option>
-                  <option value="Department Manager" className="bg-slate-950">Department Manager (Marcus Vance)</option>
-                  <option value="Team Lead" className="bg-slate-950">Team Lead (Sarah Jenkins)</option>
-                  <option value="Employee" className="bg-slate-950">Employee (Vikram Mehta)</option>
+                  <option value="Super Admin" className="bg-slate-950">Super Admin</option>
+                  <option value="HR Manager" className="bg-slate-950">HR Manager</option>
+                  <option value="Department Manager" className="bg-slate-950">Department Manager</option>
+                  <option value="Team Lead" className="bg-slate-950">Team Lead</option>
+                  <option value="Employee" className="bg-slate-950">Employee User</option>
                 </select>
               </div>
 
